@@ -214,7 +214,7 @@
                                                 </AnchorPane>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="249.0">
                                                    <children>
-                                                      <Text layoutX="24.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Business Name">
+                                                      <Text layoutX="24.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Business Name" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                                                          <font>
                                                             <Font size="14.0" />
                                                          </font>
@@ -278,6 +278,19 @@
                         </AnchorPane>
                      </content>
                 </TitledPane>
+                  <TitledPane animated="false" onMouseClicked="#blah" text="Test">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
+                           <children>
+                              <ScrollPane hbarPolicy="NEVER" layoutX="12.0" layoutY="14.0" prefHeight="433.0" prefWidth="331.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <FlowPane fx:id="flowPane" prefHeight="641.0" prefWidth="321.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
               </panes>
             </Accordion>
          </children>
