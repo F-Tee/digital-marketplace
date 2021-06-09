@@ -16,7 +16,7 @@
    <items>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
-            <Button mnemonicParsing="false" text="Menu" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+            <Button mnemonicParsing="false" onAction="#guestMenuScreen" text="Menu" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
          </children>
       </AnchorPane>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="16.0" prefWidth="333.0">
@@ -278,11 +278,11 @@
                         </AnchorPane>
                      </content>
                 </TitledPane>
-                  <TitledPane animated="false" onMouseClicked="#blah" text="Test">
+                  <TitledPane animated="false" onMouseClicked="#loadAdverts" text="Test">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
                            <children>
-                              <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="12.0" layoutY="14.0" prefHeight="433.0" prefWidth="331.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <ScrollPane hbarPolicy="NEVER" layoutX="12.0" layoutY="14.0" prefHeight="433.0" prefWidth="331.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
                                     <FlowPane fx:id="flowPane" prefHeight="641.0" prefWidth="321.0" />
                                  </content>
