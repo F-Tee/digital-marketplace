@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,7 +23,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class Main extends Application{
+public class Guest extends Application{
 
     private Parent parent;
     private Scene scene;
@@ -120,8 +121,18 @@ public class Main extends Application{
         AnchorPane.setRightAnchor(button, 20.0);
         button.setText("View");
 
+        // Image fitting
+        Image image = new Image("file:///home/ft/Documents/Uni/Synoptic Project/Digital Marketplace/src/marketplace//seller3.png");
+        double newMeasure = Math.min(image.getWidth(), image.getHeight());
+        double x = (image.getWidth() - newMeasure) / 2;
+        double y = (image.getHeight() - newMeasure) / 2;
 
-        Image image = new Image("file:///home/ft/Documents/Uni/Synoptic Project/Digital Marketplace/src/marketplace//seller2.png");
+        Rectangle2D rect = new Rectangle2D(x, y, newMeasure, newMeasure);
+        imageView.setViewport(rect);
+        imageView.setFitWidth(150);
+        imageView.setFitHeight(150);
+        imageView.setSmooth(true);
+
         imageView.setImage(image);
 
         // Add elements in
