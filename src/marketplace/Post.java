@@ -11,7 +11,7 @@ public class Post implements Serializable {
     private String description;
     private String location;
     private Category category;
-    private enum Category {
+    public enum Category {
         FOOD,
         FASHION,
         SIGHTSEEING,
@@ -47,6 +47,10 @@ public class Post implements Serializable {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getImage_path() {
+        return image_path;
     }
 
     public void setAddress(String location) {

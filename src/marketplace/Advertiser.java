@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,10 +20,12 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
-public class Advertiser extends Application {
+public class Advertiser extends Application implements Initializable {
 
     private Parent parent;
     private Scene scene;
@@ -38,14 +41,14 @@ public class Advertiser extends Application {
     @FXML
     private ImageView imagePreview;
     private File selectedImage;
-    private static ArrayList<Post> postList;
+    private static HashMap<String, Post> postList;
 
     @FXML
     private ChoiceBox<String> categoryBox;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        postList = new ArrayList<>();
+        postList = new HashMap<>();
         flowPane = new FlowPane();
         flowPane.prefHeight(641);
         flowPane.prefWidth(321);
@@ -56,8 +59,8 @@ public class Advertiser extends Application {
     }
 
     public void advertiserMenuScreen(ActionEvent event) throws Exception {
-        for (Post p : postList) {
-            System.out.println(p);
+        for (Post p : postList.values()) {
+            System.out.println(postList.get(p));
         }
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("advertiser_menu.fxml")));
         scene = new Scene(parent);
@@ -83,8 +86,9 @@ public class Advertiser extends Application {
     }
 
     public void advertCreationSuccessScreen(ActionEvent event) throws Exception {
-        postList.add(new Post(businessName.getText(), selectedImage.getAbsolutePath(),
+        postList.put(businessName.getText(), new Post(businessName.getText(), selectedImage.getAbsolutePath(),
                 businessInfo.getText(), businessLocation.getText(), categoryBox.getValue()));
+        System.out.println("Advert created: " + postList.get(businessName.getText()));
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("advert_creation_success.fxml")));
         scene = new Scene(parent);
         // This line gets the stage information
@@ -126,5 +130,10 @@ public class Advertiser extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        categoryBox.setOnMouseClicked((e) -> loadCategories());
     }
 }
