@@ -16,8 +16,9 @@ public class Database {
             FileReader fr = new FileReader("postTitles");
             BufferedReader br = new BufferedReader(fr);
             String title = br.readLine();
+            System.out.println("Title: " + title);
             while(title != null){
-                ObjectInputStream is = new ObjectInputStream(new FileInputStream(".\\posts\\"+ title + ".csv"));
+                ObjectInputStream is = new ObjectInputStream(new FileInputStream("./posts/"+ title + ".csv"));
                 Post post = (Post) is.readObject();
                 posts.add(post);
                 title = br.readLine();

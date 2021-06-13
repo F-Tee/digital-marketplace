@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -41,14 +41,14 @@ public class Advertiser extends Application implements Initializable {
     @FXML
     private ImageView imagePreview;
     private File selectedImage;
-    private static HashMap<String, Post> postList;
+    private static ArrayList<Post> postList;
 
     @FXML
     private ChoiceBox<String> categoryBox;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        postList = new HashMap<>();
+        postList = new ArrayList<>();
         flowPane = new FlowPane();
         flowPane.prefHeight(641);
         flowPane.prefWidth(321);
@@ -59,9 +59,6 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void advertiserMenuScreen(ActionEvent event) throws Exception {
-        for (Post p : postList.values()) {
-            System.out.println(postList.get(p));
-        }
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("advertiser_menu.fxml")));
         scene = new Scene(parent);
         // This line gets the stage information
@@ -86,9 +83,10 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void advertCreationSuccessScreen(ActionEvent event) throws Exception {
-        postList.put(businessName.getText(), new Post(businessName.getText(), selectedImage.getAbsolutePath(),
-                businessInfo.getText(), businessLocation.getText(), categoryBox.getValue()));
-        System.out.println("Advert created: " + postList.get(businessName.getText()));
+        Post p = new Post(businessName.getText(), selectedImage.getAbsolutePath(),
+                businessInfo.getText(), businessLocation.getText(), categoryBox.getValue());
+        p.uploadImage(p.getImage_path());
+        postList.add(p);
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("advert_creation_success.fxml")));
         scene = new Scene(parent);
         // This line gets the stage information
@@ -134,6 +132,5 @@ public class Advertiser extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        categoryBox.setOnMouseClicked((e) -> loadCategories());
     }
 }

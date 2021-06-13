@@ -95,11 +95,11 @@ public class Post implements Serializable {
         }
         //write image
 
-        String filename = path.replaceAll(".+\\\\", "");
-        System.out.println(filename);
+        String filename = path.replaceAll(".+////", "");
+        System.out.println("Filename" + filename);
 
         try {
-            ImageIO.write(img, "jpg", new File(".\\pics\\" + filename));
+            ImageIO.write(img, "jpg", new File("./pics/" + filename));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,11 +126,12 @@ public class Post implements Serializable {
         //saves post object
         File f = new File(this.title + ".csv");
         try{
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(".\\posts\\"+ this.title + ".csv"));
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("./posts/"+ this.title + ".csv"));
             os.writeObject(this);
             os.close();
         } catch (IOException e ){
             e.printStackTrace();
+            System.out.println("Error saving");
         }
         System.out.println("saved file");
         //saves post title to csv (used for loading all posts)

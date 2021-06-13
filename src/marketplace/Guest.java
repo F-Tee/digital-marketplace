@@ -46,6 +46,8 @@ public class Guest extends Application implements Initializable {
 
     private static boolean listsLoaded = false;
 
+    private Database database;
+
     @FXML
     private ImageView advertImage;
     @FXML
@@ -63,7 +65,9 @@ public class Guest extends Application implements Initializable {
         fasionList = new ArrayList<>();
         sightseeingList = new ArrayList<>();
         otherList = new ArrayList<>();
-        createTestAdverts();
+        database = new Database();
+        postList = new ArrayList<>();
+        database.loadAllPosts(postList);
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("guest_menu.fxml")));
         primaryStage.setTitle("Digital Marketplace");
@@ -222,9 +226,10 @@ public class Guest extends Application implements Initializable {
         button.setText("View");
 
         // Image fitting
-        Image image = new Image(post.getImage_path());
+        System.out.println(post.getImage_path());
+        Image image = new Image("file://" + post.getImage_path());
         advertImage.setImage(image);
-        centerImage();
+        centreImage();
 
         // Add elements in
         anchorPane1.getChildren().add(advertImage);
@@ -233,7 +238,7 @@ public class Guest extends Application implements Initializable {
         flowPane.getChildren().add(splitPane);
     }
 
-    public void centerImage() {
+    public void centreImage() {
         Image img = advertImage.getImage();
         if (img != null) {
             double w;
@@ -273,7 +278,7 @@ public class Guest extends Application implements Initializable {
 
 
         if (advertPageImage != null) {
-            Image image = new Image(currentPost.getImage_path());
+            Image image = new Image("file://" + currentPost.getImage_path());
             advertPageImage.setImage(image);
             advertPageText.setText(currentPost.getDescription());
             advertPageTitle.setText(currentPost.getTitle());
