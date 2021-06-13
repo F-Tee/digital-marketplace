@@ -29,20 +29,27 @@ public class Guest extends Application implements Initializable {
     private Scene scene;
     private Stage stage;
     @FXML
-    private FlowPane foodFlowpane;
+    private FlowPane sportFlowPane;
+    @FXML
+    private FlowPane cultureFlowPane;
     @FXML
     private FlowPane fashionFlowPane;
     @FXML
-    private FlowPane sightseeingFlowpane;
+    private FlowPane foodFlowpane;
     @FXML
-    private FlowPane otherFlowPane;
+    private FlowPane fishingFlowPane;
+    @FXML
+    private FlowPane transportFlowPane;
 
     private static Post currentPost;
     private static ArrayList<Post> postList;
-    private static ArrayList<Post> foodList;
+
+    private static ArrayList<Post> sportList;
+    private static ArrayList<Post> cultureList;
     private static ArrayList<Post> fasionList;
-    private static ArrayList<Post> sightseeingList;
-    private static ArrayList<Post> otherList;
+    private static ArrayList<Post> foodList;
+    private static ArrayList<Post> fishingList;
+    private static ArrayList<Post> transportList;
 
     private static boolean listsLoaded = false;
 
@@ -61,10 +68,14 @@ public class Guest extends Application implements Initializable {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        foodList = new ArrayList<>();
+        sportList = new ArrayList<>();
+        cultureList = new ArrayList<>();
         fasionList = new ArrayList<>();
-        sightseeingList = new ArrayList<>();
-        otherList = new ArrayList<>();
+        foodList = new ArrayList<>();
+        fishingList = new ArrayList<>();
+        transportList = new ArrayList<>();
+
+
         database = new Database();
         postList = new ArrayList<>();
         database.loadAllPosts(postList);
@@ -134,14 +145,19 @@ public class Guest extends Application implements Initializable {
     public void loadLists() {
         if (postList != null) {
             for (Post p : postList) {
-                if (p.getCategory() == Post.Category.FOOD) {
-                    foodList.add(p);
-                } else if (p.getCategory() == Post.Category.FASHION) {
-                    fasionList.add(p);
-                } else if (p.getCategory() == Post.Category.SIGHTSEEING) {
-                    sightseeingList.add(p);
-                } else if (p.getCategory() == Post.Category.OTHER) {
-                    otherList.add(p);
+                switch (p.getCategory()) {
+                    case SPORT:
+                        sportList.add(p);
+                    case CULTURE:
+                        cultureList.add(p);
+                    case FASHION:
+                        fasionList.add(p);
+                    case FOOD:
+                        foodList.add(p);
+                    case FISHING:
+                        fishingList.add(p);
+                    case TRANSPORT:
+                        transportList.add(p);
                 }
             }
         }
@@ -151,17 +167,23 @@ public class Guest extends Application implements Initializable {
     }
 
     public void loadCategories() {
-        loadFoodAdverts();
+        loadSportAdverts();
+        loadCultureAdverts();
         loadFashionAdverts();
-        loadSightseeingAdverts();
-        loadOtherAdverts();
+        loadFoodAdverts();
+        loadFishingAdverts();
+        loadTransportAdverts();
     }
 
-    public void loadFoodAdverts() {
-        System.out.println("Size: " + foodList.size());
-        for (Post p : foodList) {
-            loadAdvert(p, foodFlowpane);
-            System.out.println("Advert loaded");
+    public void loadSportAdverts() {
+        for (Post p : sportList) {
+            loadAdvert(p, sportFlowPane);
+        }
+    }
+
+    public void loadCultureAdverts() {
+        for (Post p : cultureList) {
+            loadAdvert(p, cultureFlowPane);
         }
     }
 
@@ -171,15 +193,21 @@ public class Guest extends Application implements Initializable {
         }
     }
 
-    public void loadSightseeingAdverts() {
-        for (Post p : sightseeingList) {
-            loadAdvert(p, sightseeingFlowpane);
+    public void loadFoodAdverts() {
+        for (Post p : foodList) {
+            loadAdvert(p, foodFlowpane);
         }
     }
 
-    public void loadOtherAdverts() {
-        for (Post p : otherList) {
-            loadAdvert(p, otherFlowPane);
+    public void loadFishingAdverts() {
+        for (Post p : fishingList) {
+            loadAdvert(p, fishingFlowPane);
+        }
+    }
+
+    public void loadTransportAdverts() {
+        for (Post p : transportList) {
+            loadAdvert(p, transportFlowPane);
         }
     }
 

@@ -79,7 +79,8 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void loadCategories() {
-        categoryBox.setItems(FXCollections.observableArrayList("Food", "Fashion", "Sightseeing", "Other"));
+        categoryBox.setItems(FXCollections.observableArrayList("Sports & Adventure", "History & Culture",
+                "Fashion & Craft", "Lodging & Food", "Fishing", "Transport"));
     }
 
     public void advertCreationSuccessScreen(ActionEvent event) throws Exception {

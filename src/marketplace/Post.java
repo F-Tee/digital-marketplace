@@ -14,10 +14,12 @@ public class Post implements Serializable {
     private String location;
     private Category category;
     public enum Category {
-        FOOD,
+        SPORT,
+        CULTURE,
         FASHION,
-        SIGHTSEEING,
-        OTHER
+        FOOD,
+        FISHING,
+        TRANSPORT
     }
 
     Post(String title, String image_path, String description, String address, String category) {
@@ -26,11 +28,13 @@ public class Post implements Serializable {
         this.description = description;
         this.location = address;
         this.category = switch (category) {
-            case "Food" -> Category.FOOD;
+            case "Sport" -> Category.SPORT;
+            case "Culture" -> Category.CULTURE;
             case "Fashion" -> Category.FASHION;
-            case "Sightseeing" -> Category.SIGHTSEEING;
-            case "Other" -> Category.OTHER;
-            default -> Category.FOOD;
+            case "Food" -> Category.FOOD;
+            case "Fishing" -> Category.FISHING;
+            case "Transport" -> Category.TRANSPORT;
+            default -> throw new IllegalStateException("Unexpected value: " + category);
         };
         save();
     }

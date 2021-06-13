@@ -19,20 +19,33 @@
          <children>
             <Accordion prefHeight="506.0" prefWidth="333.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <panes>
-                <TitledPane animated="false" text="Food">
+                <TitledPane animated="false" text="Sports &amp; Adventure">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
                            <children>
                               <ScrollPane hbarPolicy="NEVER" layoutX="12.0" layoutY="14.0" prefHeight="433.0" prefWidth="331.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
-                                    <FlowPane fx:id="foodFlowpane" prefHeight="641.0" prefWidth="300.0" />
+                                    <FlowPane fx:id="sportFlowPane" prefHeight="641.0" prefWidth="300.0" />
                                  </content>
                               </ScrollPane>
                            </children>
                         </AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="Fashion">
+                <TitledPane animated="false" text="History &amp; Culture">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
+                           <children>
+                              <ScrollPane hbarPolicy="NEVER" layoutX="12.0" layoutY="14.0" prefHeight="433.0" prefWidth="331.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <FlowPane fx:id="cultureFlowPane" prefHeight="641.0" prefWidth="321.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                </TitledPane>
+                <TitledPane animated="false" text="Fashion &amp; Craft">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
                            <children>
@@ -45,26 +58,39 @@
                         </AnchorPane>
                      </content>
                 </TitledPane>
-                <TitledPane animated="false" text="Sightseeing">
+                  <TitledPane animated="false" text="Lodging &amp; Food">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
                            <children>
                               <ScrollPane hbarPolicy="NEVER" layoutX="12.0" layoutY="14.0" prefHeight="433.0" prefWidth="331.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
-                                    <FlowPane fx:id="sightseeingFlowpane" prefHeight="641.0" prefWidth="321.0" />
+                                    <FlowPane fx:id="foodFlowpane" prefHeight="641.0" prefWidth="321.0" />
                                  </content>
                               </ScrollPane>
                            </children>
                         </AnchorPane>
                      </content>
-                </TitledPane>
-                  <TitledPane animated="false" text="Other">
+                  </TitledPane>
+                  <TitledPane animated="false" text="Fishing">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
                            <children>
                               <ScrollPane hbarPolicy="NEVER" layoutX="12.0" layoutY="14.0" prefHeight="433.0" prefWidth="331.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
-                                    <FlowPane fx:id="otherFlowPane" prefHeight="641.0" prefWidth="321.0" />
+                                    <FlowPane fx:id="fishingFlowPane" prefHeight="641.0" prefWidth="300.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" text="Transport">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
+                           <children>
+                              <ScrollPane hbarPolicy="NEVER" layoutX="12.0" layoutY="14.0" prefHeight="433.0" prefWidth="331.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <FlowPane fx:id="transportFlowPane" prefHeight="641.0" prefWidth="300.0" />
                                  </content>
                               </ScrollPane>
                            </children>
