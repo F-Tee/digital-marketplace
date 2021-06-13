@@ -1,7 +1,6 @@
 package marketplace;
 
 import javafx.application.Application;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -38,22 +37,32 @@ public class Guest extends Application implements Initializable {
     @FXML
     private FlowPane otherFlowPane;
 
-    private Post currentPost;
-    private static HashMap<String, Post> postList;
-    private static HashMap<String, Post> foodList;
-    private static HashMap<String, Post> fasionList;
-    private static HashMap<String, Post> sightseeingList;
-    private static HashMap<String, Post> otherList;
+    private static Post currentPost;
+    private static ArrayList<Post> postList;
+    private static ArrayList<Post> foodList;
+    private static ArrayList<Post> fasionList;
+    private static ArrayList<Post> sightseeingList;
+    private static ArrayList<Post> otherList;
+
+    private static boolean listsLoaded = false;
 
     @FXML
     private ImageView advertImage;
+    @FXML
+    private ImageView advertPageImage;
+    @FXML
+    private TextArea advertPageText;
+    @FXML
+    private TextArea advertPageLocation;
+    @FXML
+    private TextArea advertPageTitle;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        foodList = new HashMap<>();
-        fasionList = new HashMap<>();
-        sightseeingList = new HashMap<>();
-        otherList = new HashMap<>();
+        foodList = new ArrayList<>();
+        fasionList = new ArrayList<>();
+        sightseeingList = new ArrayList<>();
+        otherList = new ArrayList<>();
         createTestAdverts();
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("guest_menu.fxml")));
@@ -82,7 +91,9 @@ public class Guest extends Application implements Initializable {
         stage.show();
     }
 
-    public void advertPageScreen(ActionEvent event) throws Exception {
+    public void advertPageScreen(ActionEvent event, Post post) throws Exception {
+        System.out.println("Post title: " + post.getTitle());
+        currentPost = new Post(post);
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("guest_advert_info.fxml")));
         scene = new Scene(parent);
         // This line gets the stage information
@@ -93,120 +104,133 @@ public class Guest extends Application implements Initializable {
     }
 
     public void createTestAdverts() {
-        postList = new HashMap<>();
-        postList.put("Test Business 1", new Post("Test Business 1",
+        postList = new ArrayList<>();
+        postList.add(new Post("Test Business 1",
                 "file:///home/ft/Documents/Uni/Synoptic Project/Digital " +
-                        "Marketplace/src/marketplace//seller2.png", "Lobitos",
-                "Business description here", "Food"));
-        postList.put("Test Business 2", new Post("Test Business 2",
+                        "Marketplace/src/marketplace//seller2.png", "Business description here",
+                "Business location here", "Food"));
+        postList.add(new Post("kuahsiduhsdfsdg",
                 "file:///home/ft/Documents/Uni/Synoptic Project/Digital " +
-                        "Marketplace/src/marketplace//seller1.png", "Norwich",
-                "Business description here", "Fashion"));
-        postList.put("Test Business 3", new Post("Test Business 3",
+                        "Marketplace/src/marketplace//seller2.png", "Business description here",
+                "Business location here", "Food"));
+        postList.add(new Post("Test Business 2",
                 "file:///home/ft/Documents/Uni/Synoptic Project/Digital " +
-                        "Marketplace/src/marketplace//seller3.png", "Pierditas",
-                "Business description here", "Sightseeing"));
-        postList.put("Test Business 4", new Post("Test Business 4",
+                        "Marketplace/src/marketplace//seller1.png", "Business description here",
+                "Business location here", "Fashion"));
+        postList.add(new Post("Test Business 3",
                 "file:///home/ft/Documents/Uni/Synoptic Project/Digital " +
-                        "Marketplace/src/marketplace//seller1.png", "Lobitos",
-                "Business description here", "Other"));
-        for (Post p : postList.values()) {
-            System.out.println(postList.get(p.getTitle()));
-        }
+                        "Marketplace/src/marketplace//seller3.png", "Business description here",
+                "Business location here", "Sightseeing"));
+        postList.add(new Post("Test Business 4",
+                "file:///home/ft/Documents/Uni/Synoptic Project/Digital " +
+                        "Marketplace/src/marketplace//seller1.png", "Business description here",
+                "Business location here", "Other"));
     }
 
     public void loadLists() {
-        System.out.println("Loading lists");
         if (postList != null) {
-            for (Post p : postList.values()) {
+            for (Post p : postList) {
                 if (p.getCategory() == Post.Category.FOOD) {
-                    foodList.put(p.getTitle(), p);
-                    System.out.println(foodList.get(p.getTitle()));
+                    foodList.add(p);
                 } else if (p.getCategory() == Post.Category.FASHION) {
-                    fasionList.put(p.getTitle(), p);
+                    fasionList.add(p);
                 } else if (p.getCategory() == Post.Category.SIGHTSEEING) {
-                    sightseeingList.put(p.getTitle(), p);
+                    sightseeingList.add(p);
                 } else if (p.getCategory() == Post.Category.OTHER) {
-                    otherList.put(p.getTitle(), p);
+                    otherList.add(p);
                 }
             }
         }
         System.out.println("Lists loaded");
+        listsLoaded = true;
+        System.out.println(listsLoaded);
+    }
+
+    public void loadCategories() {
+        loadFoodAdverts();
+        loadFashionAdverts();
+        loadSightseeingAdverts();
+        loadOtherAdverts();
     }
 
     public void loadFoodAdverts() {
-        foodFlowpane.getChildren().removeAll();
-        for (Post p : foodList.values()) {
-            loadAdvert(p, foodFlowpane, foodList.size());
+        System.out.println("Size: " + foodList.size());
+        for (Post p : foodList) {
+            loadAdvert(p, foodFlowpane);
+            System.out.println("Advert loaded");
         }
     }
 
     public void loadFashionAdverts() {
-        fashionFlowPane.getChildren().removeAll();
-        for (Post p : fasionList.values()) {
-            loadAdvert(p, fashionFlowPane, fasionList.size());
+        for (Post p : fasionList) {
+            loadAdvert(p, fashionFlowPane);
         }
     }
 
     public void loadSightseeingAdverts() {
-        sightseeingFlowpane.getChildren().removeAll();
-        for (Post p : sightseeingList.values()) {
-            loadAdvert(p, sightseeingFlowpane, sightseeingList.size());
+        for (Post p : sightseeingList) {
+            loadAdvert(p, sightseeingFlowpane);
         }
     }
 
     public void loadOtherAdverts() {
-        otherFlowPane.getChildren().removeAll();
-        for (Post p : otherList.values()) {
-            loadAdvert(p, otherFlowPane, otherList.size());
+        for (Post p : otherList) {
+            loadAdvert(p, otherFlowPane);
         }
     }
 
-    public void loadAdvert(Post post, FlowPane flowPane, int size) {
-            // Create elements
-            SplitPane splitPane = new SplitPane();
-            AnchorPane anchorPane1 = new AnchorPane();
-            AnchorPane anchorPane2 = new AnchorPane();
-            advertImage = new ImageView();
-            Text text = new Text();
-            Button button = new Button();
-            // Set element positions
-            splitPane.prefWidth(300);
-            splitPane.prefHeight(160);
-            splitPane.setDividerPositions(0.5);
-            advertImage.setFitWidth(140);
-            advertImage.setFitHeight(200);
-            advertImage.pickOnBoundsProperty().setValue(true);
-            advertImage.preserveRatioProperty().setValue(true);
+    public void loadAdvert(Post post, FlowPane flowPane) {
+        // Create elements
+        SplitPane splitPane = new SplitPane();
+        AnchorPane anchorPane1 = new AnchorPane();
+        AnchorPane anchorPane2 = new AnchorPane();
+        advertImage = new ImageView();
+        Text text = new Text();
+        Button button = new Button();
+        button.setOnAction((event) -> {
+            try {
+                advertPageScreen(event, post);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        // Set element positions
+        splitPane.prefWidth(300);
+        splitPane.prefHeight(160);
+        splitPane.prefHeight(160);
+        splitPane.setDividerPositions(0.5);
+        advertImage.setFitWidth(140);
+        advertImage.setFitHeight(200);
+        advertImage.pickOnBoundsProperty().setValue(true);
+        advertImage.preserveRatioProperty().setValue(true);
 
-            anchorPane1.prefWidth(100);
-            anchorPane1.prefHeight(160);
-            anchorPane2.prefWidth(249);
-            anchorPane2.prefHeight(158);
-            text.setLayoutX(24);
-            text.setLayoutY(60);
-            AnchorPane.setTopAnchor(text, 40.0);
-            AnchorPane.setLeftAnchor(text, 20.0);
-            AnchorPane.setRightAnchor(text, 20.0);
-            text.setText(post.getTitle());
-            button.setLayoutX(51);
-            button.setLayoutY(89);
-            AnchorPane.setBottomAnchor(button, 20.0);
-            AnchorPane.setLeftAnchor(button, 20.0);
-            AnchorPane.setRightAnchor(button, 20.0);
-            button.setText("View");
-            button.setOnMouseClicked((e) -> viewAdvert(button));
+        anchorPane1.prefWidth(100);
+        anchorPane1.prefHeight(160);
+        anchorPane2.prefWidth(249);
+        anchorPane2.prefHeight(158);
+        text.setLayoutX(24);
+        text.setLayoutY(60);
+        AnchorPane.setTopAnchor(text, 40.0);
+        AnchorPane.setLeftAnchor(text, 20.0);
+        AnchorPane.setRightAnchor(text, 20.0);
+        text.setText(post.getTitle());
+        button.setLayoutX(51);
+        button.setLayoutY(89);
+        AnchorPane.setBottomAnchor(button, 20.0);
+        AnchorPane.setLeftAnchor(button, 20.0);
+        AnchorPane.setRightAnchor(button, 20.0);
+        button.setText("View");
 
-            // Image fitting
-            Image image = new Image(post.getImage_path());
-            advertImage.setImage(image);
-            centerImage();
+        // Image fitting
+        Image image = new Image(post.getImage_path());
+        advertImage.setImage(image);
+        centerImage();
 
-            // Add elements in
-            anchorPane1.getChildren().add(advertImage);
-            anchorPane2.getChildren().addAll(text, button);
-            splitPane.getItems().addAll(anchorPane1, anchorPane2);
-            flowPane.getChildren().add(splitPane);
+        // Add elements in
+        anchorPane1.getChildren().add(advertImage);
+        anchorPane2.getChildren().addAll(text, button);
+        splitPane.getItems().addAll(anchorPane1, anchorPane2);
+        flowPane.getChildren().add(splitPane);
     }
 
     public void centerImage() {
@@ -239,7 +263,21 @@ public class Guest extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Initialised");
-        loadLists();
+        System.out.println("Starter listsLoaded: " + listsLoaded);
+        if (!listsLoaded) {
+            loadLists();
+        }
+        if (foodFlowpane != null) {
+            loadCategories();
+        }
+
+
+        if (advertPageImage != null) {
+            Image image = new Image(currentPost.getImage_path());
+            advertPageImage.setImage(image);
+            advertPageText.setText(currentPost.getDescription());
+            advertPageTitle.setText(currentPost.getTitle());
+            advertPageLocation.setText(currentPost.getAddress());
+        }
     }
 }

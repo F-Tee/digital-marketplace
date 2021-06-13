@@ -19,7 +19,7 @@
          <children>
             <Accordion prefHeight="506.0" prefWidth="333.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <panes>
-                <TitledPane animated="false" onMouseClicked="#loadFoodAdverts" text="Food">
+                <TitledPane animated="false" text="Food">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
                            <children>
@@ -32,7 +32,7 @@
                         </AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" onMouseClicked="#loadFashionAdverts" text="Fashion">
+                <TitledPane animated="false" text="Fashion">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
                            <children>
@@ -45,7 +45,7 @@
                         </AnchorPane>
                      </content>
                 </TitledPane>
-                <TitledPane animated="false" onMouseClicked="#loadSightseeingAdverts" text="Sightseeing">
+                <TitledPane animated="false" text="Sightseeing">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
                            <children>
@@ -58,7 +58,7 @@
                         </AnchorPane>
                      </content>
                 </TitledPane>
-                  <TitledPane animated="false" onMouseClicked="#loadOtherAdverts" text="Other">
+                  <TitledPane animated="false" text="Other">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
                            <children>

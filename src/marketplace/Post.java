@@ -1,5 +1,7 @@
 package marketplace;
 
+import javafx.geometry.Pos;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -33,9 +35,15 @@ public class Post implements Serializable {
         save();
     }
 
-    Post() {
-
+    Post(Post post) {
+        this.title = post.getTitle();
+        this.image_path = post.getImage_path();
+        this.description = post.getDescription();
+        this.location = post.getAddress();
+        this.category = post.getCategory();
     }
+
+    Post() {}
 
     public String getAddress() {
         return location;
