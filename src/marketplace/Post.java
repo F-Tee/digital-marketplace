@@ -98,19 +98,46 @@ public class Post implements Serializable {
         //    save();
 
     }
+    
+        //Unsure if necessary
+//    public BufferedImage loadImage(){
+//        BufferedImage img = null;
+//
+//        try{
+//            File file = new File(image_path);
+//            img = ImageIO.read(file);
+//        } catch(Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        return img;
+//    }
 
-    public void save() {
+       public void save() { // requires posts folder to work 
 
-        File f = new File(title + ".csv");
-        try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(title + ".csv"));
+        //saves post object
+        File f = new File(this.title + ".csv");
+        try{
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(".\\posts\\"+ this.title + ".csv"));
             os.writeObject(this);
             os.close();
-        } catch (IOException e) {
+        } catch (IOException e ){
+            e.printStackTrace();
+        }
+        System.out.println("saved file");
+        //saves post title to csv (used for loading all posts)
+
+        try{
+            FileWriter fw = new FileWriter("postTitles", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(this.title);
+            bw.newLine();
+            bw.close();
+            fw.close();
+        } catch(Exception e){
             e.printStackTrace();
         }
 
-        System.out.println("saved file");
 
     }
 
