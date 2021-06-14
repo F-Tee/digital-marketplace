@@ -145,19 +145,18 @@ public class Guest extends Application implements Initializable {
     public void loadLists() {
         if (postList != null) {
             for (Post p : postList) {
-                switch (p.getCategory()) {
-                    case SPORT:
-                        sportList.add(p);
-                    case CULTURE:
-                        cultureList.add(p);
-                    case FASHION:
-                        fasionList.add(p);
-                    case FOOD:
-                        foodList.add(p);
-                    case FISHING:
-                        fishingList.add(p);
-                    case TRANSPORT:
-                        transportList.add(p);
+                if (p.getCategory() == Post.Category.SPORT) {
+                    sportList.add(p);
+                } else if (p.getCategory() == Post.Category.CULTURE) {
+                    cultureList.add(p);
+                } else if (p.getCategory() == Post.Category.FASHION) {
+                    fasionList.add(p);
+                } else if (p.getCategory() == Post.Category.FOOD) {
+                    foodList.add(p);
+                } else if (p.getCategory() == Post.Category.FISHING) {
+                    fishingList.add(p);
+                } else if (p.getCategory() == Post.Category.TRANSPORT) {
+                    transportList.add(p);
                 }
             }
         }
@@ -176,38 +175,50 @@ public class Guest extends Application implements Initializable {
     }
 
     public void loadSportAdverts() {
+        System.out.println("\nSport posts:");
         for (Post p : sportList) {
             loadAdvert(p, sportFlowPane);
+            System.out.println(p.getTitle());
         }
     }
 
     public void loadCultureAdverts() {
+        System.out.println("\nCulture posts:");
         for (Post p : cultureList) {
             loadAdvert(p, cultureFlowPane);
+            System.out.println(p.getTitle());
         }
     }
 
     public void loadFashionAdverts() {
+        System.out.println("\nFashion posts:");
         for (Post p : fasionList) {
             loadAdvert(p, fashionFlowPane);
+            System.out.println(p.getTitle());
         }
     }
 
     public void loadFoodAdverts() {
+        System.out.println("\nFishing posts:");
         for (Post p : foodList) {
             loadAdvert(p, foodFlowpane);
+            System.out.println(p.getTitle());
         }
     }
 
     public void loadFishingAdverts() {
+        System.out.println("\nFishing posts:");
         for (Post p : fishingList) {
             loadAdvert(p, fishingFlowPane);
+            System.out.println(p.getTitle());
         }
     }
 
     public void loadTransportAdverts() {
+        System.out.println("\nTransport posts:");
         for (Post p : transportList) {
             loadAdvert(p, transportFlowPane);
+            System.out.println(p.getTitle());
         }
     }
 
@@ -233,7 +244,7 @@ public class Guest extends Application implements Initializable {
         splitPane.setDividerPositions(0.5);
         advertImage.setFitWidth(140);
         advertImage.setFitHeight(200);
-        advertImage.pickOnBoundsProperty().setValue(true);
+//        advertImage.pickOnBoundsProperty().setValue(true);
         advertImage.preserveRatioProperty().setValue(true);
 
         anchorPane1.prefWidth(100);
@@ -254,10 +265,9 @@ public class Guest extends Application implements Initializable {
         button.setText("View");
 
         // Image fitting
-        System.out.println(post.getImage_path());
         Image image = new Image("file://" + post.getImage_path());
         advertImage.setImage(image);
-        centreImage();
+        centreImage(advertImage);
 
         // Add elements in
         anchorPane1.getChildren().add(advertImage);
@@ -266,14 +276,14 @@ public class Guest extends Application implements Initializable {
         flowPane.getChildren().add(splitPane);
     }
 
-    public void centreImage() {
-        Image img = advertImage.getImage();
+    public void centreImage(ImageView imageView) {
+        Image img = imageView.getImage();
         if (img != null) {
             double w;
             double h;
 
-            double ratioX = advertImage.getFitWidth() / img.getWidth();
-            double ratioY = advertImage.getFitHeight() / img.getHeight();
+            double ratioX = imageView.getFitWidth() / img.getWidth();
+            double ratioY = imageView.getFitHeight() / img.getHeight();
 
             double reducCoeff;
             if (ratioX >= ratioY) {
@@ -285,8 +295,8 @@ public class Guest extends Application implements Initializable {
             w = img.getWidth() * reducCoeff;
             h = img.getHeight() * reducCoeff;
 
-            advertImage.setX((advertImage.getFitWidth() - w) / 2);
-            advertImage.setY((advertImage.getFitHeight() - h) / 2);
+            imageView.setX((imageView.getFitWidth() - w) / 2);
+            imageView.setY((imageView.getFitHeight() - h) / 2);
         }
     }
 
@@ -303,7 +313,9 @@ public class Guest extends Application implements Initializable {
         if (foodFlowpane != null) {
             loadCategories();
         }
-
+        if (advertPageImage != null) {
+            centreImage(advertPageImage);
+        }
 
         if (advertPageImage != null) {
             Image image = new Image("file://" + currentPost.getImage_path());

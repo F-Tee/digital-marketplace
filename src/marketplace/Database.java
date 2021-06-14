@@ -5,23 +5,23 @@ import java.util.ArrayList;
 
 public class Database {
 
-    Database(){
+    Database() {
 
     }
 
-    public void loadAllPosts(ArrayList<Post> posts){
-        try{
+    public void loadAllPosts(ArrayList<Post> posts) {
+        try {
             FileReader fr = new FileReader("postTitles");
             BufferedReader br = new BufferedReader(fr);
             String title = br.readLine();
             System.out.println("Title: " + title);
-            while(title != null){
-                ObjectInputStream is = new ObjectInputStream(new FileInputStream("./posts/"+ title + ".csv"));
+            while (title != null) {
+                ObjectInputStream is = new ObjectInputStream(new FileInputStream("./posts/" + title + ".csv"));
                 Post post = (Post) is.readObject();
                 posts.add(post);
                 title = br.readLine();
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -32,7 +32,7 @@ public class Database {
         Database database = new Database();
         ArrayList<Post> posts = new ArrayList<>();
         database.loadAllPosts(posts);
-        for(Post post: posts){
+        for (Post post : posts) {
             System.out.println(post.getTitle());
         }
     }
