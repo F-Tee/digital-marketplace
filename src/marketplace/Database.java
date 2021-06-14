@@ -1,5 +1,7 @@
 package marketplace;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -14,8 +16,9 @@ public class Database {
             FileReader fr = new FileReader("postTitles");
             BufferedReader br = new BufferedReader(fr);
             String title = br.readLine();
+            System.out.println(title);
             while(title != null){
-                ObjectInputStream is = new ObjectInputStream(new FileInputStream(".\\posts\\"+ title + ".csv"));
+                ObjectInputStream is = new ObjectInputStream(new FileInputStream("./posts/"+ title + ".csv"));
                 Post post = (Post) is.readObject();
                 posts.add(post);
                 title = br.readLine();
@@ -67,8 +70,8 @@ public class Database {
             e.printStackTrace();
         }
        // deleting from posts
-        System.out.println(".\\posts\\plswork.csv");
-        File post_remove = new File(".\\posts\\" + title_remove + ".csv");
+        System.out.println("./posts/plswork.csv");
+        File post_remove = new File("./posts/" + title_remove + ".csv");
         boolean test = post_remove.delete();
         System.out.println(test);
 
@@ -92,11 +95,12 @@ public class Database {
         }
         //write image
 
-        String filename = path.replaceAll(".+\\\\", "");
+        String filename = path.replaceAll(".+////", "");
         System.out.println(filename);
 
         try{
-            ImageIO.write(img, "jpg", new File(".\\pics\\" + filename));
+            assert img != null;
+            ImageIO.write(img, "jpg", new File("./pics/" + filename));
 
         } catch(Exception e){
             e.printStackTrace();

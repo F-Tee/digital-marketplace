@@ -49,7 +49,8 @@ public class Post implements Serializable {
         this.category = post.getCategory();
     }
 
-    Post() {}
+    Post() {
+    }
 
     public String getAddress() {
         return location;
@@ -72,7 +73,7 @@ public class Post implements Serializable {
     }
 
 
-        //Unsure if necessary
+    //Unsure if necessary
 //    public BufferedImage loadImage(){
 //        BufferedImage img = null;
 //
@@ -86,29 +87,29 @@ public class Post implements Serializable {
 //        return img;
 //    }
 
-       public void save() { // requires posts folder to work 
+    public void save() { // requires posts folder to work
 
         //saves post object
         File f = new File(this.title + ".csv");
-        try{
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("./posts/"+ this.title + ".csv"));
+        try {
+            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("./posts/" + this.title + ".csv"));
             os.writeObject(this);
             os.close();
-        } catch (IOException e ){
+        } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error saving");
         }
         System.out.println("saved file");
         //saves post title to csv (used for loading all posts)
 
-        try{
+        try {
             FileWriter fw = new FileWriter("postTitles", true);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(this.title);
             bw.newLine();
             bw.close();
             fw.close();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -125,12 +126,4 @@ public class Post implements Serializable {
                 ", category='" + category + '\'' +
                 '}';
     }
-
-    public static void main(String[] args) {
-        Post post = new Post();
-        //post.uploadImage("D:\\willi\\Nayeon.jpg");
-        post.uploadImage("VM4E3.jpg");
-    }
-
-
 }

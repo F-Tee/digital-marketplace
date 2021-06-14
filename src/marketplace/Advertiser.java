@@ -43,6 +43,8 @@ public class Advertiser extends Application implements Initializable {
     private File selectedImage;
     private static ArrayList<Post> postList;
 
+    private Database database;
+
     @FXML
     private ChoiceBox<String> categoryBox;
 
@@ -52,6 +54,7 @@ public class Advertiser extends Application implements Initializable {
         flowPane = new FlowPane();
         flowPane.prefHeight(641);
         flowPane.prefWidth(321);
+        database = new Database();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("advertiser_menu.fxml")));
         primaryStage.setTitle("Digital Marketplace");
         primaryStage.setScene(new Scene(root, 335, 600));
@@ -84,9 +87,10 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void advertCreationSuccessScreen(ActionEvent event) throws Exception {
+        database = new Database();
         Post p = new Post(businessName.getText(), selectedImage.getAbsolutePath(),
                 businessInfo.getText(), businessLocation.getText(), categoryBox.getValue());
-        p.uploadImage(p.getImage_path());
+        database.uploadImage(p.getImage_path());
         postList.add(p);
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("advert_creation_success.fxml")));
         scene = new Scene(parent);
