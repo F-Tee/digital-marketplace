@@ -65,51 +65,10 @@ public class Post implements Serializable {
         return image_path;
     }
 
-    public void setAddress(String location) {
-        this.location = location;
-        save();
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-        save();
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-        save();
-    }
-
     public Category getCategory() {
         return category;
     }
 
-    public void uploadImage(String path) {
-        BufferedImage img = null;
-        System.out.println(path);
-        //read image
-
-
-        try {
-            File file = new File(path);
-            img = ImageIO.read(file);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("SSSSS");
-        }
-        //write image
-
-        String filename = path.replaceAll(".+////", "");
-        System.out.println("Filename" + filename);
-
-        try {
-            ImageIO.write(img, "jpg", new File("./pics/" + filename));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //    save();
-
-    }
     
         //Unsure if necessary
 //    public BufferedImage loadImage(){
