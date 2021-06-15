@@ -34,10 +34,18 @@ public class Database {
 
     }
     
-    public void deletePost(Post post){
+    public boolean deletePost(String title){
+
+        boolean success = true;
+
+        File exists = new File(".\\posts\\" + title + ".csv");
+        if(!exists.exists()){
+            return false;
+        }
+
         //deleting title from postTitles
-        String title_remove = post.getTitle();
-       // String title_remove = "swim";
+
+        // String title_remove = "swim";
         String current_line = "";
         File input = new File("postTitles");
         File output = new File("temp.csv");
@@ -49,7 +57,7 @@ public class Database {
             current_line = br.readLine();
             while(current_line != null){
                 String trimmed_line = current_line.trim();
-                if(trimmed_line.equals(title_remove)){
+                if(trimmed_line.equals(title)){
                     current_line = br.readLine();
                     continue;
                 }
@@ -69,17 +77,27 @@ public class Database {
         } catch(Exception e){
             e.printStackTrace();
         }
-       // deleting from posts
-        System.out.println("./posts/plswork.csv");
-        File post_remove = new File("./posts/" + title_remove + ".csv");
-        boolean test = post_remove.delete();
-        System.out.println(test);
 
         //deleting from pics
-        File img_remove = new File(post.getImage_path());
-        System.out.println("This is img path: " + post.getImage_path());
-        //File img_remove = new File(".\\pics\\test2.jpg");
-        img_remove.delete();
+        try{
+            ObjectInputStream is = new ObjectInputStream(new FileInputStream(".\\posts\\"+ title + ".csv"));
+            Post post = (Post) is.readObject();
+            File img_remove = new File(post.getImage_path());
+            System.out.println("This is img path: " + post.getImage_path());
+            //File img_remove = new File(".\\pics\\test2.jpg");
+            img_remove.delete();
+            is.close();
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+        // deleting from posts
+       // File post_remove = new File(".\\posts\\" + title + ".csv");
+        exists.delete();
+
+
+        return true;
     }
     
     public String uploadImage(String path){
