@@ -38,8 +38,9 @@ public class Database {
 
         boolean success = true;
 
-        File exists = new File(".\\posts\\" + title + ".csv");
+        File exists = new File("./posts/" + title + ".csv");
         if(!exists.exists()){
+            System.out.println("File does not exist");
             return false;
         }
 
@@ -80,7 +81,7 @@ public class Database {
 
         //deleting from pics
         try{
-            ObjectInputStream is = new ObjectInputStream(new FileInputStream(".\\posts\\"+ title + ".csv"));
+            ObjectInputStream is = new ObjectInputStream(new FileInputStream("./posts/"+ title + ".csv"));
             Post post = (Post) is.readObject();
             File img_remove = new File(post.getImage_path());
             System.out.println("This is img path: " + post.getImage_path());

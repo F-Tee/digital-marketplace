@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -43,10 +44,18 @@ public class Advertiser extends Application implements Initializable {
     private File selectedImage;
     private static ArrayList<Post> postList;
 
-    private Database database;
+    private static Database database;
 
     @FXML
     private ChoiceBox<String> categoryBox;
+
+    @FXML
+    private Text deleteAdvertText;
+    @FXML
+    private TextField deleteAdvertTextfield;
+
+    @FXML
+    private ImageView menuImage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -81,13 +90,22 @@ public class Advertiser extends Application implements Initializable {
         stage.show();
     }
 
+    public void deleteAdvertScreen(ActionEvent event) throws Exception {
+        parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("delete_advert.fxml")));
+        scene = new Scene(parent);
+        // This line gets the stage information
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Digital Marketplace");
+        stage.show();
+    }
+
     public void loadCategories() {
         categoryBox.setItems(FXCollections.observableArrayList("Sports & Adventure", "History & Culture",
                 "Fashion & Craft", "Lodging & Food", "Fishing", "Transport"));
     }
 
     public void advertCreationSuccessScreen(ActionEvent event) throws Exception {
-        database = new Database();
         Post p = new Post(businessName.getText(), selectedImage.getAbsolutePath(),
                 businessInfo.getText(), businessLocation.getText(), categoryBox.getValue());
         database.uploadImage(p.getImage_path());
@@ -105,6 +123,7 @@ public class Advertiser extends Application implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select image");
         selectedImage = fileChooser.showOpenDialog(stage);
+        System.out.println("Image: " + selectedImage);
 
         // Image fitting
         Image image = new Image(new FileInputStream(selectedImage));
@@ -130,6 +149,18 @@ public class Advertiser extends Application implements Initializable {
             imagePreview.setY((imagePreview.getFitHeight() - h) / 2);
         }
     }
+    
+    public void deleteAdvert() {
+        System.out.println("Deleting advert");
+        String postName = deleteAdvertTextfield.getText();
+        if (database.deletePost(postName)) {
+            System.out.println("Advert deleted");
+            deleteAdvertText.setText("Advert deleted");
+        } else {
+            System.out.println("Advert does not exist");
+            deleteAdvertText.setText("Advert does not exist");
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -137,5 +168,7 @@ public class Advertiser extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Image mImage = new Image("@../../pics/menu_image.png");
+        menuImage.setImage(mImage);
     }
 }

@@ -66,6 +66,9 @@ public class Guest extends Application implements Initializable {
     @FXML
     private TextArea advertPageTitle;
 
+    @FXML
+    private ImageView menuImage;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         sportList = new ArrayList<>();
@@ -74,7 +77,6 @@ public class Guest extends Application implements Initializable {
         foodList = new ArrayList<>();
         fishingList = new ArrayList<>();
         transportList = new ArrayList<>();
-
 
         database = new Database();
         postList = new ArrayList<>();
@@ -307,6 +309,8 @@ public class Guest extends Application implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Starter listsLoaded: " + listsLoaded);
+        Image mImage = new Image("@../../pics/menu_image.png");
+        menuImage.setImage(mImage);
         if (!listsLoaded) {
             loadLists();
         }
