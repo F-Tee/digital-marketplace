@@ -168,7 +168,9 @@ public class Advertiser extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Image mImage = new Image("@../../pics/menu_image.png");
-        menuImage.setImage(mImage);
+        if (menuImage != null) {
+            Image mImage = new Image("@../../pics/menu_image.png");
+            menuImage.setImage(mImage);
+        }
     }
 }

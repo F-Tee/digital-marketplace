@@ -309,8 +309,10 @@ public class Guest extends Application implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Starter listsLoaded: " + listsLoaded);
-        Image mImage = new Image("@../../pics/menu_image.png");
-        menuImage.setImage(mImage);
+        if (menuImage != null) {
+            Image mImage = new Image("@../../pics/menu_image.png");
+            menuImage.setImage(mImage);
+        }
         if (!listsLoaded) {
             loadLists();
         }
