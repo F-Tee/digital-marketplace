@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,7 +39,7 @@ public class Advertiser extends Application implements Initializable {
     @FXML
     private TextField businessLocation;
     @FXML
-    private TextField businessInfo;
+    private TextArea businessInfo;
     @FXML
     private ImageView imagePreview;
     private File selectedImage;
@@ -106,7 +107,9 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void advertCreationSuccessScreen(ActionEvent event) throws Exception {
-        Post p = new Post(businessName.getText(), database.uploadImage(selectedImage.getAbsolutePath()),
+        String imagePath = database.uploadImage(selectedImage.getAbsolutePath());
+        System.out.println(imagePath);
+        Post p = new Post(businessName.getText(), imagePath,
                 businessInfo.getText(), businessLocation.getText(), categoryBox.getValue());
         postList.add(p);
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("advert_creation_success.fxml")));

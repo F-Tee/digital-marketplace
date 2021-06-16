@@ -18,6 +18,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -111,7 +113,6 @@ public class Guest extends Application implements Initializable {
     }
 
     public void advertPageScreen(ActionEvent event, Post post) throws Exception {
-        System.out.println("Post title: " + post.getTitle());
         currentPost = new Post(post);
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("guest_advert_info.fxml")));
         scene = new Scene(parent);
@@ -132,30 +133,6 @@ public class Guest extends Application implements Initializable {
         stage.show();
     }
 
-    public void createTestAdverts() {
-        postList = new ArrayList<>();
-        postList.add(new Post("Test Business 1",
-                "file:///home/ft/Documents/Uni/Synoptic Project/Digital " +
-                        "Marketplace/src/marketplace//seller2.png", "Business description here",
-                "Business location here", "Food"));
-        postList.add(new Post("kuahsiduhsdfsdg",
-                "file:///home/ft/Documents/Uni/Synoptic Project/Digital " +
-                        "Marketplace/src/marketplace//seller2.png", "Business description here",
-                "Business location here", "Food"));
-        postList.add(new Post("Test Business 2",
-                "file:///home/ft/Documents/Uni/Synoptic Project/Digital " +
-                        "Marketplace/src/marketplace//seller1.png", "Business description here",
-                "Business location here", "Fashion"));
-        postList.add(new Post("Test Business 3",
-                "file:///home/ft/Documents/Uni/Synoptic Project/Digital " +
-                        "Marketplace/src/marketplace//seller3.png", "Business description here",
-                "Business location here", "Sightseeing"));
-        postList.add(new Post("Test Business 4",
-                "file:///home/ft/Documents/Uni/Synoptic Project/Digital " +
-                        "Marketplace/src/marketplace//seller1.png", "Business description here",
-                "Business location here", "Other"));
-    }
-
     public void loadLists() {
         if (postList != null) {
             for (Post p : postList) {
@@ -174,12 +151,10 @@ public class Guest extends Application implements Initializable {
                 }
             }
         }
-        System.out.println("Lists loaded");
         listsLoaded = true;
-        System.out.println(listsLoaded);
     }
 
-    public void loadCategories() {
+    public void loadCategories() throws FileNotFoundException {
         loadSportAdverts();
         loadCultureAdverts();
         loadFashionAdverts();
@@ -188,55 +163,43 @@ public class Guest extends Application implements Initializable {
         loadTransportAdverts();
     }
 
-    public void loadSportAdverts() {
-        System.out.println("\nSport posts:");
+    public void loadSportAdverts() throws FileNotFoundException {
         for (Post p : sportList) {
             loadAdvert(p, sportFlowPane);
-            System.out.println(p.getTitle());
         }
     }
 
-    public void loadCultureAdverts() {
-        System.out.println("\nCulture posts:");
+    public void loadCultureAdverts() throws FileNotFoundException {
         for (Post p : cultureList) {
             loadAdvert(p, cultureFlowPane);
-            System.out.println(p.getTitle());
         }
     }
 
-    public void loadFashionAdverts() {
-        System.out.println("\nFashion posts:");
+    public void loadFashionAdverts() throws FileNotFoundException {
         for (Post p : fasionList) {
             loadAdvert(p, fashionFlowPane);
-            System.out.println(p.getTitle());
         }
     }
 
-    public void loadFoodAdverts() {
-        System.out.println("\nFishing posts:");
+    public void loadFoodAdverts() throws FileNotFoundException {
         for (Post p : foodList) {
             loadAdvert(p, foodFlowpane);
-            System.out.println(p.getTitle());
         }
     }
 
-    public void loadFishingAdverts() {
-        System.out.println("\nFishing posts:");
+    public void loadFishingAdverts() throws FileNotFoundException {
         for (Post p : fishingList) {
             loadAdvert(p, fishingFlowPane);
-            System.out.println(p.getTitle());
         }
     }
 
-    public void loadTransportAdverts() {
-        System.out.println("\nTransport posts:");
+    public void loadTransportAdverts() throws FileNotFoundException {
         for (Post p : transportList) {
             loadAdvert(p, transportFlowPane);
-            System.out.println(p.getTitle());
         }
     }
 
-    public void loadAdvert(Post post, FlowPane flowPane) {
+    public void loadAdvert(Post post, FlowPane flowPane) throws FileNotFoundException {
         // Create elements
         SplitPane splitPane = new SplitPane();
         AnchorPane anchorPane1 = new AnchorPane();
@@ -279,7 +242,8 @@ public class Guest extends Application implements Initializable {
         button.setText("View");
 
         // Image fitting
-        Image image = new Image("file://" + post.getImage_path());
+        System.out.println("Image path: " + post.getImage_path());
+        Image image = new Image(new FileInputStream(post.getImage_path()));
         advertImage.setImage(image);
         centreImage(advertImage);
 
@@ -332,13 +296,17 @@ public class Guest extends Application implements Initializable {
             loadLists();
         }
         if (foodFlowpane != null) {
-            loadCategories();
+            try {
+                loadCategories();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
         }
         if (advertPageImage != null) {
             centreImage(advertPageImage);
         }
         if (advertPageImage != null) {
-            Image image = new Image("file://" + currentPost.getImage_path());
+            Image image = new Image(currentPost.getImage_path());
             advertPageImage.setImage(image);
             advertPageText.setText(currentPost.getDescription());
             advertPageTitle.setText(currentPost.getTitle());
