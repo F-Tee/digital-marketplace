@@ -68,6 +68,8 @@ public class Guest extends Application implements Initializable {
 
     @FXML
     private ImageView menuImage;
+    @FXML
+    private ImageView ecoImage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -112,6 +114,16 @@ public class Guest extends Application implements Initializable {
         System.out.println("Post title: " + post.getTitle());
         currentPost = new Post(post);
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("guest_advert_info.fxml")));
+        scene = new Scene(parent);
+        // This line gets the stage information
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Digital Marketplace");
+        stage.show();
+    }
+
+    public void ecoScreen(ActionEvent event) throws Exception {
+        parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("eco_message.fxml")));
         scene = new Scene(parent);
         // This line gets the stage information
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -308,10 +320,13 @@ public class Guest extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Starter listsLoaded: " + listsLoaded);
         if (menuImage != null) {
             Image mImage = new Image("@../../pics/menu_image.png");
             menuImage.setImage(mImage);
+        }
+        if (ecoImage != null) {
+            Image mImage = new Image("@../../pics/eco.png");
+            ecoImage.setImage(mImage);
         }
         if (!listsLoaded) {
             loadLists();
@@ -322,7 +337,6 @@ public class Guest extends Application implements Initializable {
         if (advertPageImage != null) {
             centreImage(advertPageImage);
         }
-
         if (advertPageImage != null) {
             Image image = new Image("file://" + currentPost.getImage_path());
             advertPageImage.setImage(image);

@@ -80,18 +80,18 @@ public class Database {
         }
 
         //deleting from pics
-        try{
-            ObjectInputStream is = new ObjectInputStream(new FileInputStream("./posts/"+ title + ".csv"));
-            Post post = (Post) is.readObject();
-            File img_remove = new File(post.getImage_path());
-            System.out.println("This is img path: " + post.getImage_path());
-            //File img_remove = new File(".\\pics\\test2.jpg");
-            img_remove.delete();
-            is.close();
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
+//        try{
+//            ObjectInputStream is = new ObjectInputStream(new FileInputStream("./posts/"+ title + ".csv"));
+//            Post post = (Post) is.readObject();
+//            File img_remove = new File(post.getImage_path());
+//            System.out.println("This is img path: " + post.getImage_path());
+//            //File img_remove = new File(".\\pics\\test2.jpg");
+//            img_remove.delete();
+//            is.close();
+//        } catch(Exception e){
+//            e.printStackTrace();
+//            return false;
+//        }
 
         // deleting from posts
        // File post_remove = new File(".\\posts\\" + title + ".csv");
@@ -119,7 +119,8 @@ public class Database {
 
         try{
             assert img != null;
-            ImageIO.write(img, "jpg", new File("./pics/" + filename));
+            System.out.println(filename);
+            ImageIO.write(img, "png", new File("./pics/" + filename));
 
         } catch(Exception e){
             e.printStackTrace();
