@@ -106,9 +106,8 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void advertCreationSuccessScreen(ActionEvent event) throws Exception {
-        Post p = new Post(businessName.getText(), selectedImage.getAbsolutePath(),
+        Post p = new Post(businessName.getText(), database.uploadImage(selectedImage.getAbsolutePath()),
                 businessInfo.getText(), businessLocation.getText(), categoryBox.getValue());
-        database.uploadImage(p.getImage_path());
         postList.add(p);
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("advert_creation_success.fxml")));
         scene = new Scene(parent);
