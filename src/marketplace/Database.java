@@ -34,6 +34,11 @@ public class Database {
 
     }
     
+     public boolean postExists(String title){
+        File post = new File(".\\posts\\" + title + ".csv");
+        return post.exists();
+    }
+    
     public boolean deletePost(String title){
 
         boolean success = true;
