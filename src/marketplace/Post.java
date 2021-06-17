@@ -29,6 +29,7 @@ public class Post implements Serializable {
         this.description = description;
         this.location = address;
         this.category = switch (category) {
+            // Sets the category depending on the input
             case "Sports & Adventure" -> Category.SPORT;
             case "History & Culture" -> Category.CULTURE;
             case "Fashion & Craft" -> Category.FASHION;

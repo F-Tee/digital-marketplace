@@ -75,6 +75,7 @@ public class Guest extends Application implements Initializable {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Run on start of application, initialises lists and other objects
         sportList = new ArrayList<>();
         cultureList = new ArrayList<>();
         fasionList = new ArrayList<>();
@@ -93,6 +94,7 @@ public class Guest extends Application implements Initializable {
     }
 
     public void guestAdvertList(ActionEvent event) throws Exception {
+        // Opens the list of adverts
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("guest_advert_list.fxml")));
         scene = new Scene(parent);
         // This line gets the stage information
@@ -103,6 +105,7 @@ public class Guest extends Application implements Initializable {
     }
 
     public void guestMenuScreen(ActionEvent event) throws Exception {
+        // Opens the guest menu screen
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("guest_menu.fxml")));
         scene = new Scene(parent);
         // This line gets the stage information
@@ -113,6 +116,7 @@ public class Guest extends Application implements Initializable {
     }
 
     public void advertPageScreen(ActionEvent event, Post post) throws Exception {
+        // Opens the advert page screen
         currentPost = new Post(post);
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("guest_advert_info.fxml")));
         scene = new Scene(parent);
@@ -124,6 +128,7 @@ public class Guest extends Application implements Initializable {
     }
 
     public void ecoScreen(ActionEvent event) throws Exception {
+        // Opens the eco message screen
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("eco_message.fxml")));
         scene = new Scene(parent);
         // This line gets the stage information
@@ -134,6 +139,7 @@ public class Guest extends Application implements Initializable {
     }
 
     public void loadLists() {
+        // This method assigns Post objects to the relevant category list
         if (postList != null) {
             for (Post p : postList) {
                 if (p.getCategory() == Post.Category.SPORT) {
@@ -155,6 +161,7 @@ public class Guest extends Application implements Initializable {
     }
 
     public void loadCategories() throws FileNotFoundException {
+        // This method loads adverts for each category displaying them in the advert list
         loadSportAdverts();
         loadCultureAdverts();
         loadFashionAdverts();
@@ -164,36 +171,42 @@ public class Guest extends Application implements Initializable {
     }
 
     public void loadSportAdverts() throws FileNotFoundException {
+        // Adds the advert to the list on the page
         for (Post p : sportList) {
             loadAdvert(p, sportFlowPane);
         }
     }
 
     public void loadCultureAdverts() throws FileNotFoundException {
+        // Adds the advert to the list on the page
         for (Post p : cultureList) {
             loadAdvert(p, cultureFlowPane);
         }
     }
 
     public void loadFashionAdverts() throws FileNotFoundException {
+        // Adds the advert to the list on the page
         for (Post p : fasionList) {
             loadAdvert(p, fashionFlowPane);
         }
     }
 
     public void loadFoodAdverts() throws FileNotFoundException {
+        // Adds the advert to the list on the page
         for (Post p : foodList) {
             loadAdvert(p, foodFlowpane);
         }
     }
 
     public void loadFishingAdverts() throws FileNotFoundException {
+        // Adds the advert to the list on the page
         for (Post p : fishingList) {
             loadAdvert(p, fishingFlowPane);
         }
     }
 
     public void loadTransportAdverts() throws FileNotFoundException {
+
         for (Post p : transportList) {
             loadAdvert(p, transportFlowPane);
         }
@@ -224,6 +237,7 @@ public class Guest extends Application implements Initializable {
 //        advertImage.pickOnBoundsProperty().setValue(true);
         advertImage.preserveRatioProperty().setValue(true);
 
+        // Set positions and sizes
         anchorPane1.prefWidth(100);
         anchorPane1.prefHeight(160);
         anchorPane2.prefWidth(249);
@@ -255,6 +269,7 @@ public class Guest extends Application implements Initializable {
     }
 
     public void centreImage(ImageView imageView) {
+        // This method resizes and centres the image in the imageview pane
         Image img = imageView.getImage();
         if (img != null) {
             double w;
@@ -284,11 +299,15 @@ public class Guest extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // This method runs on the initialisation of each page
+
         if (menuImage != null) {
+            // Loads menu image
             Image mImage = new Image("@../../pics/menu_image.png");
             menuImage.setImage(mImage);
         }
         if (ecoImage != null) {
+            // Loads eco image
             Image mImage = new Image("@../../pics/eco.png");
             ecoImage.setImage(mImage);
         }
@@ -296,6 +315,7 @@ public class Guest extends Application implements Initializable {
             loadLists();
         }
         if (foodFlowpane != null) {
+            // Puts Posts into correct categories
             try {
                 loadCategories();
             } catch (FileNotFoundException fileNotFoundException) {
@@ -303,9 +323,11 @@ public class Guest extends Application implements Initializable {
             }
         }
         if (advertPageImage != null) {
+            // Centres the image
             centreImage(advertPageImage);
         }
         if (advertPageImage != null) {
+            // Loads the advert information page attributes up
             Image image = new Image(currentPost.getImage_path());
             advertPageImage.setImage(image);
             advertPageText.setText(currentPost.getDescription());

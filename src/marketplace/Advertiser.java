@@ -63,6 +63,7 @@ public class Advertiser extends Application implements Initializable {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Run on start of application, initialises lists and other objects
         postList = new ArrayList<>();
         flowPane = new FlowPane();
         flowPane.prefHeight(641);
@@ -75,6 +76,7 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void advertiserMenuScreen(ActionEvent event) throws Exception {
+        // Opens the advertiser menu screen
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("advertiser_menu.fxml")));
         scene = new Scene(parent);
         // This line gets the stage information
@@ -85,6 +87,7 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void createAdvertScreen(ActionEvent event) throws Exception {
+        // Opens the create advert screen
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("create_advert.fxml")));
         scene = new Scene(parent);
         // This line gets the stage information
@@ -95,6 +98,7 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void deleteAdvertScreen(ActionEvent event) throws Exception {
+        // Opens the delete advert screen
         parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("delete_advert.fxml")));
         scene = new Scene(parent);
         // This line gets the stage information
@@ -105,18 +109,22 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void loadCategories() {
+        // Initialises the drop down category box to the available categories
         categoryBox.setItems(FXCollections.observableArrayList("Sports & Adventure", "History & Culture",
                 "Fashion & Craft", "Lodging & Food", "Fishing", "Transport"));
     }
 
     public void advertCreationSuccessScreen(ActionEvent event) throws Exception {
+        // Opens the advert creation success screen
         if (database.postExists(businessName.getText())) {
+            // If the post already exists the user is informed
             businessNameText.setText("Duplicate name");
             businessName.clear();
             businessName.setOnMouseClicked((e) -> {
                 businessNameText.setText("Business name");
             });
         } else {
+            // Otherwise the post is created, the image is uploaded and the post saved as a csv file
             String imagePath = database.uploadImage(selectedImage.getAbsolutePath());
             System.out.println(imagePath);
             Post p = new Post(businessName.getText(), imagePath,
@@ -133,6 +141,7 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void chooseImage() throws FileNotFoundException {
+        // This method allows the user to open a file browser to select the image and it is preview
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select image");
         selectedImage = fileChooser.showOpenDialog(stage);
@@ -145,6 +154,7 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void centerImage() {
+        // Centres and resizes the image
         Image img = imagePreview.getImage();
         if (img != null) {
             double w;
@@ -164,6 +174,7 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void deleteAdvert() {
+        // Deletes the advert if it exists, otherwise the user is informed
         System.out.println("Deleting advert");
         String postName = deleteAdvertTextfield.getText();
         if (database.deletePost(postName)) {
@@ -181,7 +192,9 @@ public class Advertiser extends Application implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Run on initilisation of each page
         if (menuImage != null) {
+            // Sets the menu image
             Image mImage = new Image("@../../pics/menu_image.png");
             menuImage.setImage(mImage);
         }

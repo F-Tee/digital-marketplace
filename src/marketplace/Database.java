@@ -35,11 +35,14 @@ public class Database {
     }
 
     public boolean postExists(String title) {
+        // If the post exists return true
         File post = new File("./posts/" + title + ".csv");
         return post.exists();
     }
 
     public boolean deletePost(String title) {
+        // Deletes the post from the post folder as well as removing the image
+        // and removing a line from posttitles.txt
 
         boolean success = true;
 
@@ -107,6 +110,7 @@ public class Database {
     }
 
     public String uploadImage(String path) {
+        // Uploads the image from the selected path to the pics folder
         BufferedImage img = null;
         System.out.println(path);
         //read image
