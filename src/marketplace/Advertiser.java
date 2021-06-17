@@ -58,6 +58,9 @@ public class Advertiser extends Application implements Initializable {
     @FXML
     private ImageView menuImage;
 
+    @FXML
+    private Text businessNameText;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         postList = new ArrayList<>();
@@ -107,18 +110,26 @@ public class Advertiser extends Application implements Initializable {
     }
 
     public void advertCreationSuccessScreen(ActionEvent event) throws Exception {
-        String imagePath = database.uploadImage(selectedImage.getAbsolutePath());
-        System.out.println(imagePath);
-        Post p = new Post(businessName.getText(), imagePath,
-                businessInfo.getText(), businessLocation.getText(), categoryBox.getValue());
-        postList.add(p);
-        parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("advert_creation_success.fxml")));
-        scene = new Scene(parent);
-        // This line gets the stage information
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle("Digital Marketplace");
-        stage.show();
+        if (database.postExists(businessName.getText())) {
+            businessNameText.setText("Duplicate name");
+            businessName.clear();
+            businessName.setOnMouseClicked((e) -> {
+                businessNameText.setText("Business name");
+            });
+        } else {
+            String imagePath = database.uploadImage(selectedImage.getAbsolutePath());
+            System.out.println(imagePath);
+            Post p = new Post(businessName.getText(), imagePath,
+                    businessInfo.getText(), businessLocation.getText(), categoryBox.getValue());
+            postList.add(p);
+            parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("advert_creation_success.fxml")));
+            scene = new Scene(parent);
+            // This line gets the stage information
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Digital Marketplace");
+            stage.show();
+        }
     }
 
     public void chooseImage() throws FileNotFoundException {
@@ -151,7 +162,7 @@ public class Advertiser extends Application implements Initializable {
             imagePreview.setY((imagePreview.getFitHeight() - h) / 2);
         }
     }
-    
+
     public void deleteAdvert() {
         System.out.println("Deleting advert");
         String postName = deleteAdvertTextfield.getText();

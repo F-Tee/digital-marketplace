@@ -7,18 +7,18 @@ import java.util.ArrayList;
 
 public class Database {
 
-    Database(){
+    Database() {
 
     }
 
-    public void loadAllPosts(ArrayList<Post> posts){
-        try{
+    public void loadAllPosts(ArrayList<Post> posts) {
+        try {
             FileReader fr = new FileReader("postTitles");
             BufferedReader br = new BufferedReader(fr);
             String title = br.readLine();
             System.out.println(title);
-            while(title != null){
-                ObjectInputStream is = new ObjectInputStream(new FileInputStream("./posts/"+ title + ".csv"));
+            while (title != null) {
+                ObjectInputStream is = new ObjectInputStream(new FileInputStream("./posts/" + title + ".csv"));
                 Post post = (Post) is.readObject();
                 posts.add(post);
                 title = br.readLine();
@@ -27,24 +27,24 @@ public class Database {
 
             fr.close();
             br.close();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
     }
-    
-     public boolean postExists(String title){
-        File post = new File(".\\posts\\" + title + ".csv");
+
+    public boolean postExists(String title) {
+        File post = new File("./posts/" + title + ".csv");
         return post.exists();
     }
-    
-    public boolean deletePost(String title){
+
+    public boolean deletePost(String title) {
 
         boolean success = true;
 
         File exists = new File("./posts/" + title + ".csv");
-        if(!exists.exists()){
+        if (!exists.exists()) {
             System.out.println("File does not exist");
             return false;
         }
@@ -55,15 +55,15 @@ public class Database {
         String current_line = "";
         File input = new File("postTitles");
         File output = new File("temp.csv");
-        try{
+        try {
             FileReader fr = new FileReader(input);
             BufferedReader br = new BufferedReader(fr);
             FileWriter fw = new FileWriter(output);
             BufferedWriter bw = new BufferedWriter(fw);
             current_line = br.readLine();
-            while(current_line != null){
+            while (current_line != null) {
                 String trimmed_line = current_line.trim();
-                if(trimmed_line.equals(title)){
+                if (trimmed_line.equals(title)) {
                     current_line = br.readLine();
                     continue;
                 }
@@ -80,41 +80,41 @@ public class Database {
             output.renameTo(input);
 
 
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         // deleting from pics
-        try{
-            ObjectInputStream is = new ObjectInputStream(new FileInputStream("./posts/"+ title + ".csv"));
+        try {
+            ObjectInputStream is = new ObjectInputStream(new FileInputStream("./posts/" + title + ".csv"));
             Post post = (Post) is.readObject();
             File img_remove = new File(post.getImage_path());
             System.out.println("This is img path: " + post.getImage_path());
             //File img_remove = new File(".\\pics\\test2.jpg");
             img_remove.delete();
             is.close();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
 
         // deleting from posts
-       // File post_remove = new File(".\\posts\\" + title + ".csv");
+        // File post_remove = new File(".\\posts\\" + title + ".csv");
         exists.delete();
 
 
         return true;
     }
-    
-    public String uploadImage(String path){
+
+    public String uploadImage(String path) {
         BufferedImage img = null;
         System.out.println(path);
         //read image
 
-        try{
+        try {
             File file = new File(path);
             img = ImageIO.read(file);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         //write image
@@ -122,12 +122,12 @@ public class Database {
         String filename = path.replaceAll(".+\\/", "");
         System.out.println("Filename: " + filename);
 
-        try{
+        try {
             assert img != null;
             System.out.println(filename);
             ImageIO.write(img, "png", new File("./pics/" + filename));
 
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "./pics/" + filename;
@@ -137,7 +137,7 @@ public class Database {
         Database database = new Database();
         ArrayList<Post> posts = new ArrayList<>();
         database.loadAllPosts(posts);
-        for(Post post: posts){
+        for (Post post : posts) {
             System.out.println(post.getTitle());
         }
     }
