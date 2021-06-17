@@ -15,6 +15,7 @@ class TestingMethods {
     @Test
     @DisplayName("Save a post to a csv upon creation")
     void savePost() throws Exception{
+        // Tests the saving fo the post works as intended
         marketplace.Post post = new marketplace.Post("Posttest", "this is a test", "123456", "address",
                 "Fishing");
         marketplace.Post post2 = new marketplace.Post("Posttest2", "this is a test 2", "12345689", "address",
@@ -43,6 +44,7 @@ class TestingMethods {
     @Test
     @DisplayName("load all known posts to an arrayList")
     void loadAllPosts() {
+        // Checks that posts can be loaded correctly from csv files stored within the posts folder
         Database database = new Database();
         marketplace.Post post = new marketplace.Post("load1", "load test 1", "12", "address", "Fishing");
         marketplace.Post post2 = new marketplace.Post("load2", "load test 2","12", "address", "Fishing");
@@ -68,6 +70,7 @@ class TestingMethods {
     @Test
     @DisplayName("Delete selected post using title")
     void deletePost() throws Exception {
+        // Checks whether posts are successfully deleted from the posts folder
         Database database = new Database();
         marketplace.Post post = new marketplace.Post("TestDelete", "Delete test","123", "address",
                 "Fishing");
@@ -98,6 +101,7 @@ class TestingMethods {
     @Test
     @DisplayName("Upload selected image to file")
     void uploadImage() {
+        // Checks whether an image from a folder is uploaded correctly
         Database database = new Database();
         File file = new File("./pics/eco.png");
         assertAll(
